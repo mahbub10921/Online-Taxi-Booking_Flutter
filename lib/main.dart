@@ -27,7 +27,7 @@ class MyWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      initialRoute: "p6",
+      initialRoute: "p7",
       routes: {
         "p1": ((context) => MyLogin()),
         "p2": ((context) => MyRegister()),
@@ -35,6 +35,7 @@ class MyWidget extends StatelessWidget {
         "p4": ((context) => MyWidget22()),
         "p5": ((context) => MyReg()),
         "p6": ((context) => ListViewl()),
+        "p7": ((context) => SearchPage()),
       },
     );
   }
@@ -109,6 +110,7 @@ class _MyLoginState extends State<MyLogin> {
         backgroundColor: Colors.transparent,
         body: Stack(
           children: [
+            
             Container(),
             Container(
               padding: const EdgeInsets.only(left: 35, top: 130),

@@ -6,189 +6,194 @@ class MyHo extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const Placeholder();
-  }
-}
-
-class MyWidget extends StatelessWidget {
-  const MyWidget({super.key});
-
-  @override
-  Widget build(BuildContext context) {
     return MaterialApp(
-      home: Scaffold(),
+      home: SafeArea(
+          child: Column(
+        children: [SearchPage(), SearchPage2()],
+      )),
     );
   }
 }
 
-class _HomePageState extends StatelessWidget {
+class SearchPage extends StatefulWidget {
+  @override
+  _SearchPageState createState() => _SearchPageState();
+}
+
+class _SearchPageState extends State<SearchPage> {
+  List<String> dataList = [
+    'Khilgaon Police Fari',
+    'Khilgaon Model College',
+    'Airport',
+    'Basabo',
+    'Mohammadpurmo',
+    'Fig',
+    'Grape',
+    'Honeydew',
+    'Imbe',
+    'Jackfruit',
+  ];
+  List<String> filteredList = [];
+  TextEditingController _searchController = TextEditingController();
+  TextEditingController _searchController2 = TextEditingController();
+
+  void filterData(String query) {
+    if (query.isNotEmpty) {
+      setState(() {
+        filteredList = dataList
+            .where((data) => data.toLowerCase().contains(query.toLowerCase()))
+            .take(2) // Set the number of suggestions to show (e.g., 2 or 3)
+            .toList();
+      });
+    } else {
+      setState(() {
+        filteredList = [];
+      });
+    }
+  }
+
+  void selectSuggestion(String suggestion) {
+    setState(() {
+      _searchController.text = suggestion;
+      filteredList = [];
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color.fromRGBO(244, 243, 243, 1),
       appBar: AppBar(
-        backgroundColor: Colors.white,
-        elevation: 0,
-        leading: IconButton(
-          icon: Icon(
-            Icons.menu,
-            color: Colors.black87,
-          ),
-          onPressed: () {},
-        ),
-        systemOverlayStyle: SystemUiOverlayStyle.dark,
+        title: Text('Dako'),
       ),
-      body: SafeArea(
-        child: SingleChildScrollView(
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: <Widget>[
-              Container(
-                width: double.infinity,
-                decoration: BoxDecoration(
-                    color: Colors.white,
-                    borderRadius:
-                        BorderRadius.vertical(bottom: Radius.circular(30))),
-                padding: EdgeInsets.all(20.0),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: <Widget>[
-                    Text(
-                      'Find Your',
-                      style: TextStyle(color: Colors.black87, fontSize: 25),
+      body: Column(
+        children: [
+          Container(
+            child: Padding(
+              padding: EdgeInsets.only(left: 10, right: 10, top: 50),
+              child: SizedBox(
+                height: 50,
+                child: TextField(
+                  onChanged: filterData,
+                  controller: _searchController,
+                  decoration: InputDecoration(
+                    labelText: 'Where From',
+                    prefixIcon: Icon(Icons.search),
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(10.0),
                     ),
-                    SizedBox(
-                      height: 5,
-                    ),
-                    Text(
-                      'Inspiration',
-                      style: TextStyle(
-                          color: Colors.black,
-                          fontSize: 40,
-                          fontWeight: FontWeight.bold),
-                    ),
-                    SizedBox(
-                      height: 20,
-                    ),
-                    Container(
-                      padding: EdgeInsets.all(5),
-                      decoration: BoxDecoration(
-                          color: Color.fromRGBO(244, 243, 243, 1),
-                          borderRadius: BorderRadius.circular(15)),
-                      child: TextField(
-                        decoration: InputDecoration(
-                            border: InputBorder.none,
-                            prefixIcon: Icon(
-                              Icons.search,
-                              color: Colors.black87,
-                            ),
-                            hintText: "Search you're looking for",
-                            hintStyle:
-                                TextStyle(color: Colors.grey, fontSize: 15)),
-                      ),
-                    ),
-                    SizedBox(
-                      height: 10,
-                    ),
-                  ],
+                  ),
                 ),
               ),
-              SizedBox(
-                height: 20,
-              ),
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 20.0),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: <Widget>[
-                    const Text(
-                      'Promo Today',
-                      style:
-                          TextStyle(fontSize: 15, fontWeight: FontWeight.bold),
-                    ),
-                    SizedBox(
-                      height: 15,
-                    ),
-                    Container(
-                      height: 200,
-                      child: ListView(
-                        scrollDirection: Axis.horizontal,
-                        children: <Widget>[
-                          promoCard('assets/one.jpg'),
-                          promoCard('assets/two.jpg'),
-                          promoCard('assets/three.jpg'),
-                          promoCard('assets/four.jpg'),
-                        ],
-                      ),
-                    ),
-                    SizedBox(
-                      height: 20,
-                    ),
-                    Container(
-                      height: 150,
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(20),
-                        image: const DecorationImage(
-                            fit: BoxFit.cover,
-                            image: AssetImage('assets/three.jpg')),
-                      ),
-                      child: Container(
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(20),
-                          gradient: LinearGradient(
-                              begin: Alignment.bottomRight,
-                              stops: [
-                                0.3,
-                                0.9
-                              ],
-                              colors: [
-                                Colors.black.withOpacity(.8),
-                                Colors.black.withOpacity(.2)
-                              ]),
-                        ),
-                        child: Align(
-                          alignment: Alignment.bottomLeft,
-                          child: Padding(
-                            padding: const EdgeInsets.all(15.0),
-                            child: Text(
-                              'Best Design',
-                              style:
-                                  TextStyle(color: Colors.white, fontSize: 20),
-                            ),
-                          ),
-                        ),
-                      ),
-                    )
-                  ],
-                ),
-              )
-            ],
+            ),
           ),
-        ),
+          Container(
+            child: Padding(
+              padding: EdgeInsets.only(left: 10, right: 10, top: 20),
+              child: SizedBox(
+                height: 50,
+                child: TextField(
+                  onChanged: filterData,
+                  controller: _searchController2,
+                  decoration: InputDecoration(
+                    labelText: 'Where to',
+                    prefixIcon: Icon(Icons.search),
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(10.0),
+                    ),
+                  ),
+                ),
+              ),
+            ),
+          ),
+          Expanded(
+            child: ListView.builder(
+              itemCount: filteredList.length,
+              itemBuilder: (BuildContext context, int index) {
+                return ListTile(
+                  title: Text(filteredList[index]),
+                  onTap: () {
+                    selectSuggestion(filteredList[index]);
+                  },
+                );
+              },
+            ),
+          ),
+        ],
       ),
     );
   }
+}
 
-  Widget promoCard(image) {
-    return AspectRatio(
-      aspectRatio: 2.62 / 3,
-      child: Container(
-        margin: EdgeInsets.only(right: 15.0),
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(20),
-          image: DecorationImage(fit: BoxFit.cover, image: AssetImage(image)),
-        ),
-        child: Container(
-          decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(20),
-              gradient: LinearGradient(begin: Alignment.bottomRight, stops: [
-                0.1,
-                0.9
-              ], colors: [
-                Colors.black.withOpacity(.8),
-                Colors.black.withOpacity(.1)
-              ])),
-        ),
+class SearchPage2 extends StatefulWidget {
+  @override
+  _SearchPageState2 createState() => _SearchPageState2();
+}
+
+class _SearchPageState2 extends State<SearchPage2> {
+  List<String> dataList = [
+    'Khilgaon Police Fari',
+    'Khilgaon Model College',
+    'Airport',
+    'Basabo',
+    'Mohammadpurmo',
+    'Fig',
+    'Grape',
+    'Honeydew',
+    'Imbe',
+    'Jackfruit',
+  ];
+  List<String> filteredList = [];
+
+  void filterData(String query) {
+    if (query.isNotEmpty) {
+      setState(() {
+        filteredList = dataList
+            .where((data) => data.toLowerCase().contains(query.toLowerCase()))
+            .take(2) // Set the number of suggestions to show (e.g., 2 or 3)
+            .toList();
+      });
+    } else {
+      setState(() {
+        filteredList = [];
+      });
+    }
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Text('Dako'),
+      ),
+      body: Column(
+        children: [
+          Padding(
+            padding: EdgeInsets.only(left: 10, right: 10, top: 50),
+            child: SizedBox(
+              height: 50,
+              child: TextField(
+                onChanged: filterData,
+                decoration: InputDecoration(
+                  labelText: 'Search',
+                  prefixIcon: Icon(Icons.search),
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(10.0),
+                  ),
+                ),
+              ),
+            ),
+          ),
+          Expanded(
+            child: ListView.builder(
+              itemCount: filteredList.length,
+              itemBuilder: (BuildContext context, int index) {
+                return ListTile(
+                  title: Text(filteredList[index]),
+                );
+              },
+            ),
+          ),
+        ],
       ),
     );
   }
