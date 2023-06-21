@@ -30,7 +30,7 @@ class _MyRegisterState extends State<MyRegister> {
 
   Future<void> onPressedSubmit() async {
     print("okkkkkkkkkk");
-    String url = 'http://192.168.20.46:8080/api/posts';
+    String url = 'http://192.168.20.38:8080/api/posts';
     //var reqBody = {"username": _email, "name": _name, "password": _password};
     var re = {"title": _name, "body": _email};
     var response = await http.post(Uri.parse(url),

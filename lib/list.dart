@@ -1,33 +1,41 @@
+import 'package:first_flutter_project/Edit.dart';
+import 'package:first_flutter_project/Model/route.dart';
+import 'package:first_flutter_project/register.dart';
 import 'package:first_flutter_project/service.dart';
 import 'package:flutter/material.dart';
 
 import 'Model/PostModel.dart';
 
-class ListView extends StatefulWidget {
-  const ListView({super.key});
+class ListViewl extends StatefulWidget {
+  const ListViewl({super.key});
 
   @override
-  State<ListView> createState() => _ListViewState();
-
-  static builder(
-      {required int itemCount,
-      required ListTile Function(dynamic context, dynamic index)
-          itemBuilder}) {}
+  State<ListViewl> createState() => _ListViewState();
 }
 
-class _ListViewState extends State<ListView> {
+class _ListViewState extends State<ListViewl> {
   late List<PostModel>? _userModel = [];
+  late List<Route1>? _userModel2 = [];
+
+  void _getData() async {
+    _userModel = (await ApiService().getPosts());
+    Future.delayed(const Duration(seconds: 1)).then((value) => setState(
+          () {},
+        ));
+  }
+
+  void _getData2() async {
+    _userModel2 = (await ApiService().getPosts2());
+    Future.delayed(const Duration(seconds: 1)).then((value) => setState(
+          () {},
+        ));
+  }
 
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
-    void _getData() async {
-      _userModel = (await ApiService().getPosts())!;
-      Future.delayed(const Duration(seconds: 1)).then((value) => setState(
-            () {},
-          ));
-    }
+    _getData();
   }
 
   Widget _getPostList(context) {
@@ -37,7 +45,16 @@ class _ListViewState extends State<ListView> {
         actions: [
           IconButton(
               onPressed: () {
-                // goBack(context);
+                // Navigator.pushNamedAndRemoveUntil(
+                //     context, "p5", (route) => false);
+
+                Navigator.pushAndRemoveUntil<dynamic>(
+                  context,
+                  MaterialPageRoute<dynamic>(
+                    builder: (BuildContext context) => MyReg(),
+                  ),
+                  (route) => false,
+                );
               },
               icon: Icon(Icons.arrow_back_ios_sharp))
         ],
@@ -56,14 +73,14 @@ class _ListViewState extends State<ListView> {
                     subtitle: Text(_userModel![index].body.toString()),
                     trailing: IconButton(
                       onPressed: () {
-                        // Navigator.pushAndRemoveUntil<dynamic>(
-                        //   context,
-                        //   MaterialPageRoute<dynamic>(
-                        //     builder: (BuildContext context) =>
-                        //         Detail(posts: _postsModel![index]),
-                        //   ),
-                        //   (route) => false,
-                        // );
+                        Navigator.pushAndRemoveUntil<dynamic>(
+                          context,
+                          MaterialPageRoute<dynamic>(
+                            builder: (BuildContext context) =>
+                                MyWidget(postmodel: _userModel![index]),
+                          ),
+                          (route) => false,
+                        );
                       },
                       icon: Icon(Icons.more_vert),
                     ),

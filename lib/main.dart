@@ -1,4 +1,5 @@
 import 'package:first_flutter_project/home.dart';
+import 'package:first_flutter_project/list.dart';
 import 'package:first_flutter_project/regisTrationForm.dart';
 import 'package:first_flutter_project/register.dart';
 import 'package:flutter/material.dart';
@@ -33,7 +34,7 @@ class MyWidget extends StatelessWidget {
         "p3": ((context) => Search()),
         "p4": ((context) => MyWidget22()),
         "p5": ((context) => MyReg()),
-        "p6": ((context) => ListView()),
+        "p6": ((context) => ListViewl()),
       },
     );
   }
