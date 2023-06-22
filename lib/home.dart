@@ -1,5 +1,8 @@
+import 'package:first_flutter_project/service.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+
+import 'Model/route.dart';
 
 class MyHo extends StatelessWidget {
   const MyHo({super.key});
@@ -16,6 +19,20 @@ class SearchPage extends StatefulWidget {
 }
 
 class _SearchPageState extends State<SearchPage> {
+  late List<Route1>? _userModel2 = [];
+  @override
+  void initState() {
+    // TODO: implement initState
+    void _getData2() async {
+      _userModel2 = (await ApiService().getPosts2());
+      Future.delayed(const Duration(seconds: 1)).then((value) => setState(
+            () {
+              _userModel2 = value;
+            },
+          ));
+    }
+  }
+
   List<String> dataList = [
     'Apple',
     'Banana',
@@ -29,8 +46,10 @@ class _SearchPageState extends State<SearchPage> {
     'Jackfruit',
   ];
   List<String> filteredList = [];
+  List<String> filteredList2 = [];
 
   TextEditingController _searchController = TextEditingController();
+  TextEditingController _searchController2 = TextEditingController();
 
   void filterData(String query) {
     if (query.isNotEmpty) {
@@ -47,10 +66,32 @@ class _SearchPageState extends State<SearchPage> {
     }
   }
 
+  void filterData2(String query) {
+    if (query.isNotEmpty) {
+      setState(() {
+        filteredList2 = dataList
+            .where((data) => data.toLowerCase().contains(query.toLowerCase()))
+            .take(2) // Set the number of suggestions to show (e.g., 2 or 3)
+            .toList();
+      });
+    } else {
+      setState(() {
+        filteredList2 = [];
+      });
+    }
+  }
+
   void selectSuggestion(String suggestion) {
     setState(() {
       _searchController.text = suggestion;
       filteredList = [];
+    });
+  }
+
+  void selectSuggestion2(String suggestion) {
+    setState(() {
+      _searchController2.text = suggestion;
+      filteredList2 = [];
     });
   }
 
@@ -69,7 +110,7 @@ class _SearchPageState extends State<SearchPage> {
                 controller: _searchController,
                 onChanged: filterData,
                 decoration: InputDecoration(
-                  labelText: 'Where are you going',
+                  labelText: 'Set your Location',
                   prefixIcon: Icon(Icons.search),
                   border: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(10.0),
@@ -82,10 +123,10 @@ class _SearchPageState extends State<SearchPage> {
             child: Padding(
               padding: EdgeInsets.only(left: 10, right: 10, top: 20),
               child: TextField(
-                controller: _searchController,
-                onChanged: filterData,
+                controller: _searchController2,
+                onChanged: filterData2,
                 decoration: InputDecoration(
-                  labelText: 'Where from',
+                  labelText: 'Where to go ?',
                   prefixIcon: Icon(Icons.search),
                   border: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(10.0),
@@ -94,80 +135,102 @@ class _SearchPageState extends State<SearchPage> {
               ),
             ),
           ),
+
           Expanded(
             child: ListView.builder(
-              itemCount: filteredList.length,
+              itemCount: filteredList.length > 0
+                  ? filteredList.length
+                  : filteredList2.length,
               itemBuilder: (BuildContext context, int index) {
                 return ListTile(
-                  title: Text(filteredList[index]),
+                  title: Text(filteredList.length > 0
+                      ? filteredList[index]
+                      : filteredList2[index]),
                   onTap: () {
-                    selectSuggestion(filteredList[index]);
+                    if (filteredList.length > 0) {
+                      selectSuggestion(filteredList[index]);
+                    } else {
+                      selectSuggestion2(filteredList2[index]);
+                    }
                   },
                 );
               },
             ),
           ),
-          Center(
-            child: Container(
-              height: 200,
-              width: 600,
-              child: Center(
-                child: ListView(
-                  scrollDirection: Axis.horizontal,
-                  children: [
-                    Container(
-                      height: 50,
-                      width: 50,
-                      decoration: BoxDecoration(
-                        color: Colors.blue, // Background color
-                        image: DecorationImage(
-                          image:
-                              AssetImage('assets/one.jpg'), // Background image
-                          fit: BoxFit.cover, // Image fit type
-                        ),
-                      ),
-                    ),
-                    Container(
-                      height: 50,
-                      width: 50,
-                      decoration: BoxDecoration(
-                        color: Colors.blue, // Background color
-                        image: DecorationImage(
-                          image:
-                              AssetImage('assets/two.jpg'), // Background image
-                          fit: BoxFit.cover, // Image fit type
-                        ),
-                      ),
-                    ),
-                    Container(
-                      height: 50,
-                      width: 50,
-                      decoration: BoxDecoration(
-                        color: Colors.blue, // Background color
-                        image: DecorationImage(
-                          image: AssetImage(
-                              'assets/three.jpg'), // Background image
-                          fit: BoxFit.cover, // Image fit type
-                        ),
-                      ),
-                    ),
-                    Container(
-                      height: 50,
-                      width: 50,
-                      decoration: BoxDecoration(
-                        color: Colors.blue, // Background color
-                        image: DecorationImage(
-                          image:
-                              AssetImage('assets/four.jpg'), // Background image
-                          fit: BoxFit.cover, // Image fit type
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-            ),
-          ),
+          // Expanded(
+          //   child: ListView.builder(
+          //     itemCount: filteredList2.length,
+          //     itemBuilder: (BuildContext context, int index) {
+          //       return ListTile(
+          //         title: Text(filteredList[index]),
+          //         onTap: () {
+          //           selectSuggestion2(filteredList2[index]);
+          //         },
+          //       );
+          //     },
+          //   ),
+          // ),
+          // Center(
+          //   child: Container(
+          //     height: 200,
+          //     width: 600,
+          //     child: Center(
+          //       child: ListView(
+          //         scrollDirection: Axis.horizontal,
+          //         children: [
+          //           Container(
+          //             height: 50,
+          //             width: 50,
+          //             decoration: BoxDecoration(
+          //               color: Colors.blue, // Background color
+          //               image: DecorationImage(
+          //                 image:
+          //                     AssetImage('assets/one.jpg'), // Background image
+          //                 fit: BoxFit.cover, // Image fit type
+          //               ),
+          //             ),
+          //           ),
+          //           Container(
+          //             height: 50,
+          //             width: 50,
+          //             decoration: BoxDecoration(
+          //               color: Colors.blue, // Background color
+          //               image: DecorationImage(
+          //                 image:
+          //                     AssetImage('assets/two.jpg'), // Background image
+          //                 fit: BoxFit.cover, // Image fit type
+          //               ),
+          //             ),
+          //           ),
+          //           Container(
+          //             height: 50,
+          //             width: 50,
+          //             decoration: BoxDecoration(
+          //               color: Colors.blue, // Background color
+          //               image: DecorationImage(
+          //                 image: AssetImage(
+          //                     'assets/three.jpg'), // Background image
+          //                 fit: BoxFit.cover, // Image fit type
+          //               ),
+          //             ),
+          //           ),
+          //           Container(
+          //             height: 50,
+          //             width: 50,
+          //             decoration: BoxDecoration(
+          //               color: Colors.blue, // Background color
+          //               image: DecorationImage(
+          //                 image:
+          //                     AssetImage('assets/four.jpg'), // Background image
+          //                 fit: BoxFit.cover, // Image fit type
+          //               ),
+          //             ),
+          //           ),
+          //         ],
+          //       ),
+          //     ),
+          //   ),
+          // ),
         ],
       ),
     );

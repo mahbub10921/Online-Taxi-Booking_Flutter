@@ -29,4 +29,6 @@ class Route1 {
         "latitude": latitude,
         "longitude": longitude,
       };
+
+  toLowerCase() {}
 }

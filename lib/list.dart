@@ -1,5 +1,6 @@
 import 'package:first_flutter_project/Edit.dart';
 import 'package:first_flutter_project/Model/route.dart';
+import 'package:first_flutter_project/regisTrationForm.dart';
 import 'package:first_flutter_project/register.dart';
 import 'package:first_flutter_project/service.dart';
 import 'package:flutter/material.dart';
@@ -77,12 +78,12 @@ class _ListViewState extends State<ListViewl> {
                           context,
                           MaterialPageRoute<dynamic>(
                             builder: (BuildContext context) =>
-                                MyWidget(postmodel: _userModel![index]),
+                                MyWidget22(post1: _userModel![index]),
                           ),
                           (route) => false,
                         );
                       },
-                      icon: Icon(Icons.more_vert),
+                      icon: Icon(Icons.update),
                     ),
                     isThreeLine: true,
                   );

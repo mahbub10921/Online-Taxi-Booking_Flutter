@@ -1,10 +1,8 @@
 import 'package:first_flutter_project/Model/PostModel.dart';
 import 'package:first_flutter_project/main.dart';
-import 'package:first_flutter_project/service.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter/src/widgets/placeholder.dart';
-import 'package:flutter/services.dart';
 
 class MyWidget22 extends StatefulWidget {
   final PostModel? post1;
@@ -24,11 +22,7 @@ class _MyWidgetState extends State<MyWidget22> {
       ),
       body: Container(
         padding: const EdgeInsets.fromLTRB(20, 0, 20, 0),
-        child: widget.post1 == null
-            ? SignUpForm()
-            : SignUpForm(
-                post2: widget.post1,
-              ),
+        child: SignUpForm(post2: widget.post1),
       ),
     );
   }
@@ -45,6 +39,7 @@ class SignUpForm extends StatefulWidget {
 
 class _SignUpFormState extends State<SignUpForm> {
   final _passkey = GlobalKey<FormFieldState>();
+
   String _name = '';
   String _email = '';
   int _age = -1;
@@ -69,17 +64,13 @@ class _SignUpFormState extends State<SignUpForm> {
     ));
   }
 
-  int? _id = 0;
+  int _id = 0;
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
-
-    if (widget.post2 != null) {
-      _name = widget.post2!.title.toString();
-      _password = widget.post2!.body.toString();
-      _id = widget.post2!.id;
-    }
+    _name = widget.post2!.title.toString();
+    _password = widget.post2!.body.toString();
   }
 
   @override
@@ -95,6 +86,7 @@ class _SignUpFormState extends State<SignUpForm> {
   List<Widget> getFormWidget() {
     List<Widget> formWidget = [];
     formWidget.add(TextFormField(
+      initialValue: _name,
       decoration:
           const InputDecoration(labelText: 'enter name', hintText: 'name'),
       validator: (value) {
@@ -245,14 +237,6 @@ class _SignUpFormState extends State<SignUpForm> {
       controlAffinity: ListTileControlAffinity.leading,
     ));
     Future<void> onPressedSubmit() async {
-      PostModel pm = new PostModel();
-      pm.title = _name;
-      pm.body = _password;
-      if (widget.post2 != null) {
-        pm.id = _id;
-      }
-      (await ApiService().createPost(pm));
-
       // if (_formKey.currentState!.validate() && _termsChecked) {
       //   _formKey.currentState?.save();
 

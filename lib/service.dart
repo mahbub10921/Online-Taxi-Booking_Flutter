@@ -1,3 +1,4 @@
+import 'dart:convert';
 import 'dart:developer';
 
 import 'package:first_flutter_project/Model/PostModel.dart';
@@ -45,6 +46,20 @@ class ApiService {
             postsFromJson(response.body) as List<PostModel>;
         return _model;
       }
+    } catch (e) {
+      log(e.toString());
+    }
+  }
+
+  Future<PostModel?> createPost(PostModel postmodel) async {
+    try {
+      var url = Uri.parse('http://192.168.20.38:8080/api/posts');
+      var response = await http.post(url,
+          headers: {"Content-Type": "application/json"},
+          body: jsonEncode(postmodel));
+      if (response.statusCode == 200) {
+        return null;
+      } else {}
     } catch (e) {
       log(e.toString());
     }

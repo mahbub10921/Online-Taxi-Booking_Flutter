@@ -1,6 +1,8 @@
 import 'package:first_flutter_project/Model/PostModel.dart';
+
 import 'package:first_flutter_project/list.dart';
 import 'package:first_flutter_project/service.dart';
+import 'package:first_flutter_project/update.dart';
 import 'package:flutter/material.dart';
 
 class MyWidget extends StatelessWidget {
@@ -39,6 +41,14 @@ class MyWidget extends StatelessWidget {
             TextButton(
                 onPressed: () {
                   print("Update Call!");
+                  Navigator.pushAndRemoveUntil<dynamic>(
+                    context,
+                    MaterialPageRoute<dynamic>(
+                      builder: (BuildContext context) =>
+                          (MyWidget22(post1: postmodel)),
+                    ),
+                    (route) => false,
+                  );
                 },
                 child: Icon(Icons.update)),
           ],
