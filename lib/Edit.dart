@@ -1,4 +1,5 @@
 import 'package:first_flutter_project/Model/PostModel.dart';
+import 'package:first_flutter_project/Model/newRegist.dart';
 
 import 'package:first_flutter_project/list.dart';
 import 'package:first_flutter_project/service.dart';
@@ -6,9 +7,10 @@ import 'package:first_flutter_project/update.dart';
 import 'package:flutter/material.dart';
 
 class MyWidget extends StatelessWidget {
-  final PostModel? postmodel;
+  // final PostModel? postmodel;
+  final NewRegis? newregis;
 
-  const MyWidget({super.key, this.postmodel});
+  const MyWidget({super.key, this.newregis});
 
   Widget getPost(context) {
     return Padding(
@@ -19,14 +21,14 @@ class MyWidget extends StatelessWidget {
           children: [
             SizedBox(width: 1.0),
             Text(
-              "Id : " + postmodel!.id.toString(),
+              "Id : " + newregis!.id.toString(),
               style: TextStyle(fontSize: 15, fontFamily: "bolt-semibold"),
               textAlign: TextAlign.left,
             ),
             SizedBox(width: 1.0), // give it width
 
             Text(
-              postmodel!.body.toString(),
+              newregis!.name.toString(),
               style: TextStyle(fontSize: 10, fontFamily: "bolt-semibold"),
               textAlign: TextAlign.left,
             ),
@@ -34,7 +36,7 @@ class MyWidget extends StatelessWidget {
 
             TextButton(
                 onPressed: () async {
-                  (await ApiService().deletePosts(postmodel!.id));
+                  (await ApiService().deletePosts(newregis!.id));
                   // print("Delete Call!");
                 },
                 child: Icon(Icons.delete)),
@@ -44,8 +46,7 @@ class MyWidget extends StatelessWidget {
                   Navigator.pushAndRemoveUntil<dynamic>(
                     context,
                     MaterialPageRoute<dynamic>(
-                      builder: (BuildContext context) =>
-                          (MyWidget22(post1: postmodel)),
+                      builder: (BuildContext context) => (MyWidget22()),
                     ),
                     (route) => false,
                   );
@@ -65,7 +66,7 @@ class MyWidget extends StatelessWidget {
         title: Text(
           // (userModel != null) ? userModel!.name : posts!.title.toString(),
           // product!.name.toString(),
-          postmodel!.title.toString(),
+          newregis!.password.toString(),
         ),
         actions: [
           IconButton(

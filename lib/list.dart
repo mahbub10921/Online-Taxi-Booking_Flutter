@@ -1,4 +1,5 @@
 import 'package:first_flutter_project/Edit.dart';
+import 'package:first_flutter_project/Model/newRegist.dart';
 import 'package:first_flutter_project/Model/route.dart';
 import 'package:first_flutter_project/regisTrationForm.dart';
 import 'package:first_flutter_project/register.dart';
@@ -15,18 +16,30 @@ class ListViewl extends StatefulWidget {
 }
 
 class _ListViewState extends State<ListViewl> {
-  late List<PostModel>? _userModel = [];
-  late List<Route1>? _userModel2 = [];
+  late List<PostModel>? getpost1 = [];
+  late List<NewRegis>? getReg = [];
+  late List<Route1>? getRoute = [];
 
   void _getData() async {
-    _userModel = (await ApiService().getPosts());
+    getpost1 = (await ApiService().getPosts());
+    Future.delayed(const Duration(seconds: 1)).then((value) => setState(
+          () {},
+        ));
+  }
+
+  void _getNewReg() async {
+    getReg = (await ApiService().getNewReg());
+    print("----------------response.body------------------");
+
+    print(getReg);
+
     Future.delayed(const Duration(seconds: 1)).then((value) => setState(
           () {},
         ));
   }
 
   void _getData2() async {
-    _userModel2 = (await ApiService().getPosts2());
+    getRoute = (await ApiService().getPosts2());
     Future.delayed(const Duration(seconds: 1)).then((value) => setState(
           () {},
         ));
@@ -36,7 +49,7 @@ class _ListViewState extends State<ListViewl> {
   void initState() {
     // TODO: implement initState
     super.initState();
-    _getData();
+    _getNewReg();
   }
 
   Widget _getPostList(context) {
@@ -60,26 +73,29 @@ class _ListViewState extends State<ListViewl> {
               icon: Icon(Icons.arrow_back_ios_sharp))
         ],
       ),
-      body: _userModel == null || _userModel!.isEmpty
+      body: getReg == null || getReg!.isEmpty
           ? const Center(
               child: CircularProgressIndicator(),
+              // child: Text("No Data!!"),
             )
           : Center(
               child: ListView.builder(
-                itemCount: _userModel!.length,
+                itemCount: getReg!.length,
                 itemBuilder: (context, index) {
                   return ListTile(
                     leading: FlutterLogo(size: 72.0),
-                    title: Text(_userModel![index].title.toString()),
-                    subtitle: Text(_userModel![index].body.toString()),
+                    title: Text(getReg![index].name.toString()),
+                    subtitle: (Text(getReg![index].model.toString() +
+                        "/" +
+                        getReg![index].category.toString())),
                     trailing: IconButton(
                       onPressed: () {
                         Navigator.pushAndRemoveUntil<dynamic>(
                           context,
                           MaterialPageRoute<dynamic>(
-                            builder: (BuildContext context) =>
-                                MyWidget22(post1: _userModel![index]),
-                          ),
+                              builder: (BuildContext context) =>
+                                  // MyWidget22(post1: _userModel![index]),
+                                  MyWidget22()),
                           (route) => false,
                         );
                       },

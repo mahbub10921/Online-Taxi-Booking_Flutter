@@ -2,6 +2,9 @@ import 'dart:convert';
 // import 'dart:html';
 
 import 'package:first_flutter_project/Model/PostModel.dart';
+import 'package:first_flutter_project/Model/newRegist.dart';
+import 'package:first_flutter_project/list.dart';
+import 'package:first_flutter_project/service.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 
@@ -32,6 +35,7 @@ class _MyRegisterState extends State<MyRegister> {
   String _number = '';
   String _vehicleRegis = '';
   String _model = '';
+  String _category = '';
 
   int _selectedCategory = 0;
 
@@ -44,20 +48,39 @@ class _MyRegisterState extends State<MyRegister> {
 
   Future<void> onPressedSubmit() async {
     print("okkkkkkkkkk");
-    String url = 'http://192.168.20.38:8080/api/posts';
-    //var reqBody = {"username": _email, "name": _name, "password": _password};
-    var re = {"title": _name, "body": _email};
-    var response = await http.post(Uri.parse(url),
-        headers: {"Content-Type": "application/json"}, body: jsonEncode(re));
 
-    var jsonResponse = jsonDecode(response.body);
+    NewRegis newRegis = new NewRegis();
+    newRegis.name = _name;
+    newRegis.email = _email;
+    newRegis.category = _category;
+    newRegis.model = _model;
+    newRegis.number = _number;
+    newRegis.regis = _vehicleRegis;
+    newRegis.password = _password;
 
-    // if (jsonResponse['status']) {
-    //   print('data submit');
-    // } else {
-    //   print('wrong');
-    // }
+    (await ApiService().createNewReg(newRegis));
+
+    print("save hoice");
+    _name = "";
+    _email = "";
+    _category = "";
+    _model = "";
+    _number = "";
   }
+
+  // String url = 'http://192.168.20.38:8080/api/posts';
+  // //var reqBody = {"username": _email, "name": _name, "password": _password};
+  // var re = {"title": _name, "body": _email};
+  // var response = await http.post(Uri.parse(url),
+  //     headers: {"Content-Type": "application/json"}, body: jsonEncode(re));
+
+  // var jsonResponse = jsonDecode(response.body);
+
+  // if (jsonResponse['status']) {
+  //   print('data submit');
+  // } else {
+  //   print('wrong');
+  // }
 
   @override
   Widget build(BuildContext context) {
@@ -147,9 +170,6 @@ class _MyRegisterState extends State<MyRegister> {
                             height: 10,
                           ),
                           TextField(
-                            onChanged: (value) {
-                              _password = value.toString();
-                            },
                             style: const TextStyle(color: Colors.white),
                             obscureText: true,
                             decoration: InputDecoration(
@@ -170,6 +190,9 @@ class _MyRegisterState extends State<MyRegister> {
                                 border: OutlineInputBorder(
                                   borderRadius: BorderRadius.circular(10),
                                 )),
+                            onChanged: (value) {
+                              _number = value.toString();
+                            },
                           ),
                           const SizedBox(
                             height: 10,
@@ -195,7 +218,7 @@ class _MyRegisterState extends State<MyRegister> {
                                   borderRadius: BorderRadius.circular(10),
                                 )),
                             onChanged: (value) {
-                              _name = value.toString();
+                              _password = value.toString();
                             },
                           ),
                           const SizedBox(
@@ -222,7 +245,7 @@ class _MyRegisterState extends State<MyRegister> {
                                   borderRadius: BorderRadius.circular(10),
                                 )),
                             onChanged: (value) {
-                              _name = value.toString();
+                              _vehicleRegis = value.toString();
                             },
                           ),
                           TextField(
@@ -246,19 +269,43 @@ class _MyRegisterState extends State<MyRegister> {
                                   borderRadius: BorderRadius.circular(10),
                                 )),
                             onChanged: (value) {
-                              _name = value.toString();
+                              _model = value.toString();
                             },
                           ),
-                          DropdownButton(
-                            borderRadius: BorderRadius.circular(10),
-                            hint: const Text('Select Category'),
-                            items: categoryList,
-                            value: _selectedCategory,
+                          TextField(
+                            style: const TextStyle(color: Colors.white),
+                            decoration: InputDecoration(
+                                enabledBorder: OutlineInputBorder(
+                                  borderRadius: BorderRadius.circular(10),
+                                  borderSide: const BorderSide(
+                                    color: Colors.white,
+                                  ),
+                                ),
+                                focusedBorder: OutlineInputBorder(
+                                  borderRadius: BorderRadius.circular(10),
+                                  borderSide: const BorderSide(
+                                    color: Colors.black,
+                                  ),
+                                ),
+                                hintText: "Vehicle Category",
+                                hintStyle: const TextStyle(color: Colors.white),
+                                border: OutlineInputBorder(
+                                  borderRadius: BorderRadius.circular(10),
+                                )),
                             onChanged: (value) {
-                              _selectedCategory = int.parse(value.toString());
+                              _category = value.toString();
                             },
-                            isExpanded: true,
                           ),
+                          // DropdownButton(
+                          //   borderRadius: BorderRadius.circular(10),
+                          //   hint: const Text('Select Category'),
+                          //   items: categoryList,
+                          //   value: _selectedCategory,
+                          //   onChanged: (value) {
+                          //     _selectedCategory = int.parse(value.toString());
+                          //   },
+                          //   isExpanded: true,
+                          // ),
                           Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
@@ -276,6 +323,14 @@ class _MyRegisterState extends State<MyRegister> {
                                     color: Colors.white,
                                     onPressed: () {
                                       onPressedSubmit();
+                                      Navigator.pushAndRemoveUntil<dynamic>(
+                                        context,
+                                        MaterialPageRoute<dynamic>(
+                                            builder: (BuildContext context) =>
+                                                // MyWidget22(post1: _userModel![index]),
+                                                ListViewl()),
+                                        (route) => false,
+                                      );
                                     },
                                     icon: const Icon(
                                       Icons.arrow_forward,

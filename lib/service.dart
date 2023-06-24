@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'dart:developer';
 
 import 'package:first_flutter_project/Model/PostModel.dart';
+import 'package:first_flutter_project/Model/newRegist.dart';
 import 'package:http/http.dart' as http;
 import '';
 import 'Model/route.dart';
@@ -37,6 +38,20 @@ class ApiService {
     }
   }
 
+  Future<List<NewRegis>?> getNewReg() async {
+    try {
+      var url = Uri.parse('http://192.168.20.45:8080/api/custommmm');
+      var response = await http.get(url);
+      if (response.statusCode == 200) {
+        print(response.body);
+        List<NewRegis> _model2 = postsFromJson6(response.body);
+        return _model2;
+      }
+    } catch (e) {
+      log(e.toString());
+    }
+  }
+
   Future<List<PostModel>?> getPosts() async {
     try {
       var url = Uri.parse('http://192.168.20.38:8080/api/posts');
@@ -57,6 +72,20 @@ class ApiService {
       var response = await http.post(url,
           headers: {"Content-Type": "application/json"},
           body: jsonEncode(postmodel));
+      if (response.statusCode == 200) {
+        return null;
+      } else {}
+    } catch (e) {
+      log(e.toString());
+    }
+  }
+
+  Future<NewRegis?> createNewReg(NewRegis newRegis) async {
+    try {
+      var url = Uri.parse('http://192.168.20.45:8080/api/newreg');
+      var response = await http.post(url,
+          headers: {"Content-Type": "application/json"},
+          body: jsonEncode(newRegis));
       if (response.statusCode == 200) {
         return null;
       } else {}
