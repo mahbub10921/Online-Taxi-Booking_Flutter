@@ -159,12 +159,13 @@ class _SearchPageState extends State<SearchPage> {
           ),
           // Expanded(
           //   child: ListView.builder(
-          //     itemCount: filteredList2.length,
+          //     itemCount: filteredList>0 ? filteredList.length : filteredList2.length,
           //     itemBuilder: (BuildContext context, int index) {
           //       return ListTile(
-          //         title: Text(filteredList[index]),
+          //         title: Text(filteredList.length>0 ? filteredList[index]:filteredList2[index]),
           //         onTap: () {
-          //           selectSuggestion2(filteredList2[index]);
+          //           if(filteredList>0){selectSuggestion(filteredList[index]);}
+          
           //         },
           //       );
           //     },

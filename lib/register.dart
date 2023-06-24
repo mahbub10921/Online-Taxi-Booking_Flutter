@@ -29,6 +29,18 @@ class _MyRegisterState extends State<MyRegister> {
   String _name = '';
   String _email = '';
   String _password = '';
+  String _number = '';
+  String _vehicleRegis = '';
+  String _model = '';
+
+  int _selectedCategory = 0;
+
+  List<DropdownMenuItem<int>> categoryList = [];
+  void onLoadCategory() {
+    categoryList = [];
+    categoryList.add(const DropdownMenuItem(child: Text('4 seat'), value: 0));
+    categoryList.add(const DropdownMenuItem(child: Text('7 seat'), value: 1));
+  }
 
   Future<void> onPressedSubmit() async {
     print("okkkkkkkkkk");
@@ -72,7 +84,7 @@ class _MyRegisterState extends State<MyRegister> {
             SingleChildScrollView(
               child: Container(
                 padding: EdgeInsets.only(
-                    top: MediaQuery.of(context).size.height * 0.28),
+                    top: MediaQuery.of(context).size.height * 0.20),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
@@ -105,7 +117,7 @@ class _MyRegisterState extends State<MyRegister> {
                             },
                           ),
                           const SizedBox(
-                            height: 30,
+                            height: 10,
                           ),
                           TextField(
                             style: const TextStyle(color: Colors.white),
@@ -132,7 +144,7 @@ class _MyRegisterState extends State<MyRegister> {
                             },
                           ),
                           const SizedBox(
-                            height: 30,
+                            height: 10,
                           ),
                           TextField(
                             onChanged: (value) {
@@ -153,14 +165,99 @@ class _MyRegisterState extends State<MyRegister> {
                                     color: Colors.black,
                                   ),
                                 ),
-                                hintText: "Password",
+                                hintText: "Phone",
                                 hintStyle: const TextStyle(color: Colors.white),
                                 border: OutlineInputBorder(
                                   borderRadius: BorderRadius.circular(10),
                                 )),
                           ),
                           const SizedBox(
-                            height: 40,
+                            height: 10,
+                          ),
+                          TextField(
+                            style: const TextStyle(color: Colors.white),
+                            decoration: InputDecoration(
+                                enabledBorder: OutlineInputBorder(
+                                  borderRadius: BorderRadius.circular(10),
+                                  borderSide: const BorderSide(
+                                    color: Colors.white,
+                                  ),
+                                ),
+                                focusedBorder: OutlineInputBorder(
+                                  borderRadius: BorderRadius.circular(10),
+                                  borderSide: const BorderSide(
+                                    color: Colors.black,
+                                  ),
+                                ),
+                                hintText: "Password",
+                                hintStyle: const TextStyle(color: Colors.white),
+                                border: OutlineInputBorder(
+                                  borderRadius: BorderRadius.circular(10),
+                                )),
+                            onChanged: (value) {
+                              _name = value.toString();
+                            },
+                          ),
+                          const SizedBox(
+                            height: 10,
+                          ),
+                          TextField(
+                            style: const TextStyle(color: Colors.white),
+                            decoration: InputDecoration(
+                                enabledBorder: OutlineInputBorder(
+                                  borderRadius: BorderRadius.circular(10),
+                                  borderSide: const BorderSide(
+                                    color: Colors.white,
+                                  ),
+                                ),
+                                focusedBorder: OutlineInputBorder(
+                                  borderRadius: BorderRadius.circular(10),
+                                  borderSide: const BorderSide(
+                                    color: Colors.black,
+                                  ),
+                                ),
+                                hintText: "Vehicle Registration No.",
+                                hintStyle: const TextStyle(color: Colors.white),
+                                border: OutlineInputBorder(
+                                  borderRadius: BorderRadius.circular(10),
+                                )),
+                            onChanged: (value) {
+                              _name = value.toString();
+                            },
+                          ),
+                          TextField(
+                            style: const TextStyle(color: Colors.white),
+                            decoration: InputDecoration(
+                                enabledBorder: OutlineInputBorder(
+                                  borderRadius: BorderRadius.circular(10),
+                                  borderSide: const BorderSide(
+                                    color: Colors.white,
+                                  ),
+                                ),
+                                focusedBorder: OutlineInputBorder(
+                                  borderRadius: BorderRadius.circular(10),
+                                  borderSide: const BorderSide(
+                                    color: Colors.black,
+                                  ),
+                                ),
+                                hintText: "Vehicle Model",
+                                hintStyle: const TextStyle(color: Colors.white),
+                                border: OutlineInputBorder(
+                                  borderRadius: BorderRadius.circular(10),
+                                )),
+                            onChanged: (value) {
+                              _name = value.toString();
+                            },
+                          ),
+                          DropdownButton(
+                            borderRadius: BorderRadius.circular(10),
+                            hint: const Text('Select Category'),
+                            items: categoryList,
+                            value: _selectedCategory,
+                            onChanged: (value) {
+                              _selectedCategory = int.parse(value.toString());
+                            },
+                            isExpanded: true,
                           ),
                           Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
