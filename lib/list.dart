@@ -49,7 +49,7 @@ class _ListViewState extends State<ListViewl> {
   void initState() {
     // TODO: implement initState
     super.initState();
-    _getNewReg();
+    _getData2();
   }
 
   Widget _getPostList(context) {
@@ -73,21 +73,19 @@ class _ListViewState extends State<ListViewl> {
               icon: Icon(Icons.arrow_back_ios_sharp))
         ],
       ),
-      body: getReg == null || getReg!.isEmpty
+      body: getRoute == null || getRoute!.isEmpty
           ? const Center(
               child: CircularProgressIndicator(),
               // child: Text("No Data!!"),
             )
           : Center(
               child: ListView.builder(
-                itemCount: getReg!.length,
+                itemCount: getRoute!.length,
                 itemBuilder: (context, index) {
                   return ListTile(
                     leading: FlutterLogo(size: 72.0),
-                    title: Text(getReg![index].name.toString()),
-                    subtitle: (Text(getReg![index].model.toString() +
-                        "/" +
-                        getReg![index].category.toString())),
+                    title: Text(getRoute![index].location.toString()),
+                    subtitle: (Text(getRoute![index].latitude.toString())),
                     trailing: IconButton(
                       onPressed: () {
                         Navigator.pushAndRemoveUntil<dynamic>(

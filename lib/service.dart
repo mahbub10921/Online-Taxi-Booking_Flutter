@@ -52,6 +52,23 @@ class ApiService {
     }
   }
 
+  Future<double?> getDistance(
+      double lat1, double long1, double lat2, double long2, String unit) async {
+    try {
+      var url = Uri.parse('http://192.168.20.45:8080/api/distanceCount');
+      var response = await http.get(url);
+      if (response.statusCode == 200) {
+        print(response.body);
+        double _distance = response.body as double;
+        // List<NewRegis> _model2 = postsFromJson6(response.body);
+        return _distance;
+      }
+    } catch (e) {
+      log(e.toString());
+    }
+    return null;
+  }
+
   Future<List<PostModel>?> getPosts() async {
     try {
       var url = Uri.parse('http://192.168.20.38:8080/api/posts');

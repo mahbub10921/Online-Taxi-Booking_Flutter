@@ -14,47 +14,67 @@ class MyHo extends StatelessWidget {
 }
 
 class SearchPage extends StatefulWidget {
-  
   @override
   _SearchPageState createState() => _SearchPageState();
 }
 
 class _SearchPageState extends State<SearchPage> {
   late List<Route1>? routeList = [];
-  
-List<int> numbers = [1, 2, 3, 4, 5];
+  late double latitude1 = 0;
+  late double longitude1 = 0;
+  late double latitude2 = 0;
+  late double longitude2 = 0;
 
+  void _getData2() async {
+    routeList = (await ApiService().getPosts2());
+    Future.delayed(const Duration(seconds: 1)).then((value) => setState(
+          () {},
+        ));
+  }
 
-for (int number in numbers) {
-  // Do something with the number
-  print(number);
-}
+  List<int> numbers = [1, 2, 3, 4, 5];
 
+  var arr = ["jon", "irra", "tom", "Jery"];
 
+  _loop() async {
+    // print(routeList!.length);
+
+    // print(_searchController);
+    // print(_searchController2);
+    for (var name in routeList!) {
+      print("------------------------");
+
+      print(_searchController);
+      print(name.location);
+      if (_searchController == name.location) {
+        latitude1 = name.latitude!;
+        longitude1 = name.longitude!;
+      }
+      if (_searchController2 == name.location) {
+        latitude2 = name.latitude!;
+        longitude2 = name.longitude!;
+      }
+    }
+
+    double? dis = (await ApiService()
+        .getDistance(latitude1, longitude1, latitude2, longitude2, "km"));
+    print(dis);
+  }
 
   @override
   void initState() {
     // TODO: implement initState
-    void _getData2() async {
-      routeList = (await ApiService().getPosts2());
-      Future.delayed(const Duration(seconds: 1)).then((value) => setState(
-            () {
-              routeList = value;
-            },
-          ));
-    }
+    super.initState();
+    _getData2();
   }
 
-
-
-
   List<String> dataList = [
-    'Apple',
-    'Banana',
-    'Cherry',
-    'Durian',
-    'Elderberry',
-    'Fig',
+    'Hazrat Shahjalal International Airport,Dhaka',
+    'Khilgaon Railgate,Khilgaon,Dhaka',
+    'Banani Graveyard',
+    'Bashundhara Residential Area,Dhaka',
+    'Abul Hotel,Malibagh,Dhaka',
+    'Basabo',
     'Grape',
     'Honeydew',
     'Imbe',
@@ -150,7 +170,16 @@ for (int number in numbers) {
               ),
             ),
           ),
-
+          Container(
+            child: Padding(
+                padding: EdgeInsets.only(left: 10, right: 10, top: 20),
+                child: TextButton(
+                    onPressed: () {
+                      print("test");
+                      _loop();
+                    },
+                    child: Text('search'))),
+          ),
           Expanded(
             child: ListView.builder(
               itemCount: filteredList.length > 0
@@ -166,6 +195,7 @@ for (int number in numbers) {
                       selectSuggestion(filteredList[index]);
                     } else {
                       selectSuggestion2(filteredList2[index]);
+                      _loop();
                     }
                   },
                 );
@@ -180,7 +210,7 @@ for (int number in numbers) {
           //         title: Text(filteredList.length>0 ? filteredList[index]:filteredList2[index]),
           //         onTap: () {
           //           if(filteredList>0){selectSuggestion(filteredList[index]);}
-          
+
           //         },
           //       );
           //     },
@@ -249,12 +279,32 @@ for (int number in numbers) {
           // ),
         ],
       ),
+      bottomNavigationBar: BottomNavigationBar(
+        selectedItemColor: Colors.blue,
+        unselectedItemColor: Colors.grey,
+        currentIndex: 0,
+        items: [
+          BottomNavigationBarItem(
+            icon: Icon(Icons.home),
+            label: 'Home',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.search),
+            label: 'Search',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.favorite),
+            label: 'Favorites',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.person),
+            label: 'Profile',
+          ),
+        ],
+      ),
     );
   }
 }
-
-
-
 
 class MyWidget extends StatelessWidget {
   const MyWidget({super.key});
