@@ -14,24 +14,39 @@ class MyHo extends StatelessWidget {
 }
 
 class SearchPage extends StatefulWidget {
+  
   @override
   _SearchPageState createState() => _SearchPageState();
 }
 
 class _SearchPageState extends State<SearchPage> {
-  late List<Route1>? _userModel2 = [];
+  late List<Route1>? routeList = [];
+  
+List<int> numbers = [1, 2, 3, 4, 5];
+
+
+for (int number in numbers) {
+  // Do something with the number
+  print(number);
+}
+
+
+
   @override
   void initState() {
     // TODO: implement initState
     void _getData2() async {
-      _userModel2 = (await ApiService().getPosts2());
+      routeList = (await ApiService().getPosts2());
       Future.delayed(const Duration(seconds: 1)).then((value) => setState(
             () {
-              _userModel2 = value;
+              routeList = value;
             },
           ));
     }
   }
+
+
+
 
   List<String> dataList = [
     'Apple',
@@ -237,6 +252,9 @@ class _SearchPageState extends State<SearchPage> {
     );
   }
 }
+
+
+
 
 class MyWidget extends StatelessWidget {
   const MyWidget({super.key});
