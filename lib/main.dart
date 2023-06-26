@@ -1,5 +1,6 @@
 import 'package:first_flutter_project/home.dart';
 import 'package:first_flutter_project/list.dart';
+import 'package:first_flutter_project/options.dart';
 import 'package:first_flutter_project/regisTrationForm.dart';
 import 'package:first_flutter_project/register.dart';
 import 'package:flutter/material.dart';
@@ -27,7 +28,7 @@ class MyWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      initialRoute: "p7",
+      initialRoute: "p8",
       routes: {
         "p1": ((context) => MyLogin()),
         "p2": ((context) => MyRegister()),
@@ -36,6 +37,7 @@ class MyWidget extends StatelessWidget {
         "p5": ((context) => MyReg()),
         "p6": ((context) => ListViewl()),
         "p7": ((context) => SearchPage()),
+        "p8": ((context) => Options())
       },
     );
   }
