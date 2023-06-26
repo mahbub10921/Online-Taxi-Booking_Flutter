@@ -37,12 +37,14 @@ class _SearchPageState extends State<SearchPage> {
   var arr = ["jon", "irra", "tom", "Jery"];
 
   _loop() async {
-    // print(routeList!.length);
-
-    // print(_searchController);
-    // print(_searchController2);
+    print('enter');
+    print(" Length--- $routeList");
+    print(routeList!.length);
+    print(_searchController);
+    print(_searchController2);
     for (var name in routeList!) {
       print("------------------------");
+      print('name');
 
       print(_searchController);
       print(name.location);
@@ -173,12 +175,12 @@ class _SearchPageState extends State<SearchPage> {
           Container(
             child: Padding(
                 padding: EdgeInsets.only(left: 10, right: 10, top: 20),
-                child: TextButton(
+                child: ElevatedButton(
                     onPressed: () {
-                      print("test");
+                      print("---------------------Test--------------");
                       _loop();
                     },
-                    child: Text('search'))),
+                    child: Text('Search'))),
           ),
           Expanded(
             child: ListView.builder(
@@ -195,7 +197,6 @@ class _SearchPageState extends State<SearchPage> {
                       selectSuggestion(filteredList[index]);
                     } else {
                       selectSuggestion2(filteredList2[index]);
-                      _loop();
                     }
                   },
                 );

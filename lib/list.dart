@@ -62,13 +62,13 @@ class _ListViewState extends State<ListViewl> {
                 // Navigator.pushNamedAndRemoveUntil(
                 //     context, "p5", (route) => false);
 
-                Navigator.pushAndRemoveUntil<dynamic>(
-                  context,
-                  MaterialPageRoute<dynamic>(
-                    builder: (BuildContext context) => MyReg(),
-                  ),
-                  (route) => false,
-                );
+                // Navigator.pushAndRemoveUntil<dynamic>(
+                //   context,
+                //   MaterialPageRoute<dynamic>(
+                //     builder: (BuildContext context) => MyReg(),
+                //   ),
+                //   (route) => false,
+                // );
               },
               icon: Icon(Icons.arrow_back_ios_sharp))
         ],

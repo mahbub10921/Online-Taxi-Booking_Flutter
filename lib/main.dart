@@ -28,7 +28,7 @@ class MyWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      initialRoute: "p8",
+      initialRoute: "p6",
       routes: {
         "p1": ((context) => MyLogin()),
         "p2": ((context) => MyRegister()),

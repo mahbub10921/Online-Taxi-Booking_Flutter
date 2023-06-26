@@ -28,7 +28,10 @@ class ApiService {
   Future<List<Route1>?> getPosts2() async {
     try {
       var url = Uri.parse('http://192.168.20.45:8080/api/route');
-      var response = await http.get(url);
+      var response =
+          await http.get(url, headers: {"Content-Type": "application/json"});
+      print("--------------");
+      print(response.body);
       if (response.statusCode == 200) {
         List<Route1> _model2 = postsFromJson2(response.body) as List<Route1>;
         return _model2;
@@ -55,7 +58,17 @@ class ApiService {
   Future<double?> getDistance(
       double lat1, double long1, double lat2, double long2, String unit) async {
     try {
-      var url = Uri.parse('http://192.168.20.45:8080/api/distanceCount');
+      var url = Uri.parse('http://192.168.20.45:8080/api/distanceCount' +
+          '/distanceCount?lat1=' +
+          lat1.toString() +
+          '&lon1=' +
+          long1.toString() +
+          '&lat2=' +
+          lat2.toString() +
+          '&lon2=' +
+          long2.toString() +
+          '&unit=' +
+          unit.toString());
       var response = await http.get(url);
       if (response.statusCode == 200) {
         print(response.body);
